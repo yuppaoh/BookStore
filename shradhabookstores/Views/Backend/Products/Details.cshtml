@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Backend/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -86,5 +86,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Product")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

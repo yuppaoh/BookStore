@@ -1,0 +1,58 @@
+﻿@model shradhabookstores.EF.Manufacture
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Backend/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Manufacture</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ManufactureId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManufactureId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ManufactureName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManufactureName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManufactureAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManufactureAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ManufactureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

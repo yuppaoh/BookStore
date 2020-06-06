@@ -4,18 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6d08920914dd40539058b719e72371df" Name="Diagram1">
-        <EntityTypeShape EntityType="BookStoreModel.Category" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Customer" Width="1.5" PointX="5.625" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Manufacture" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.OrderDetail" Width="1.5" PointX="8" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Order" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Payment" Width="1.5" PointX="5.625" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Product" Width="1.5" PointX="3.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.User" Width="1.5" PointX="3.25" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="5e26c2a07e1e4a29b641ec0e45f06813" Name="Diagram1">
+        <EntityTypeShape EntityType="BookStoreModel.Category" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Customer" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Manufacture" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.OrderDetail" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Order" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Payment" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.User" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <AssociationConnector Association="BookStoreModel.product_categories" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.order_customers" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.product_manufacture" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.orderdetail_orders" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.orderdetail_products" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.order_payments" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

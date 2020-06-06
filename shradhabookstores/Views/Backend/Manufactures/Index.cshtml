@@ -1,0 +1,58 @@
+﻿@model IEnumerable<shradhabookstores.EF.Manufacture>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Backend/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ManufactureId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManufactureName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManufactureAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Note)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufactureId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufactureName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufactureAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Note)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ManufactureId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ManufactureId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ManufactureId })
+        </td>
+    </tr>
+}
+
+</table>

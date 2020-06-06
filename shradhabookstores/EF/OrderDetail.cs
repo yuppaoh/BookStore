@@ -18,5 +18,8 @@ namespace shradhabookstores.EF
         public string ProductId { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<double> UnitPrice { get; set; }
+    
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

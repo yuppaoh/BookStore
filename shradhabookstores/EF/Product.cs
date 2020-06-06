@@ -14,8 +14,15 @@ namespace shradhabookstores.EF
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.OrderDetails = new HashSet<OrderDetail>();
+        }
+    
         public string ProductId { get; set; }
         public string CategoryId { get; set; }
+        public string ProductImage { get; set; }
         public string ProductName { get; set; }
         public string ProductType { get; set; }
         public string ManufactureId { get; set; }
@@ -27,5 +34,7 @@ namespace shradhabookstores.EF
     
         public virtual Category Category { get; set; }
         public virtual Manufacture Manufacture { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

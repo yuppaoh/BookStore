@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<shradhabookstores.EF.Product>
+
 @{
     ViewBag.Title = "Product";
 }
@@ -157,20 +158,57 @@
                 border: solid 1px lightgray;
                 border-radius: 10px;
                 //background-color: gainsboro;
-                
             }
-            .product:hover {
-                box-shadow: 5px 5px 5px #666;
-                background: khaki;
-            }
-            
+
+                .product:hover {
+                    box-shadow: 5px 5px 5px #666;
+                    background: khaki;
+                }
         </style>
         <h2>List of product</h2>
+
+        
+
         <div class="row center-block">
-            @for (int i = 0; i < 25; i++)
+            @foreach (var item in ViewBag.ListProducts)
             {
-                <div class="col-md-3 product">product detail</div>
+                if (String.IsNullOrEmpty(item.ProductImage))
+                {
+                    <img class="bd-placeholder-img card-img-top img-product img-thumbnail" width="30%" height="30%" src="~/Content/images/no-photo.png">
+                }
+                else
+                {
+                    <a href="/Home/ProductDetail/@item.ProductId">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img class="bd-placeholder-img card-img-top img-product img-thumbnail" width="30%" height="30%" src="~/UploadedFiles/@item.ProductImage">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span>@item.ProductName</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span>@item.UnitPrice</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+
+                }
             }
+
+            @*@for (int i = 0; i < 25; i++)
+            {
+                <div class="col-md-3 product">
+
+                </div>
+            }*@
+
         </div>
 
 

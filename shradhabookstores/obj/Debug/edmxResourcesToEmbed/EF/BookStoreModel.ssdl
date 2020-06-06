@@ -16,7 +16,7 @@
     <Property Name="CustomerAddress" Type="varchar" MaxLength="100" />
     <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
     <Property Name="CustomerPassword" Type="varchar" MaxLength="20" />
-    <Property Name="CustomerStatus" Type="varchar" MaxLength="10" />
+    <Property Name="CustomerStatus" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="Manufactures">
     <Key>
@@ -24,8 +24,8 @@
     </Key>
     <Property Name="ManufactureId" Type="varchar" MaxLength="3" Nullable="false" />
     <Property Name="ManufactureName" Type="varchar" MaxLength="150" />
-    <Property Name="ManufactureAddress" Type="varchar" MaxLength="25" />
-    <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
+    <Property Name="ManufactureAddress" Type="varchar" MaxLength="150" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="18" />
     <Property Name="Note" Type="varchar" MaxLength="256" />
   </EntityType>
   <EntityType Name="OrderDetails">
@@ -64,6 +64,7 @@
     </Key>
     <Property Name="ProductId" Type="varchar" MaxLength="7" Nullable="false" />
     <Property Name="CategoryId" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="ProductImage" Type="varchar" MaxLength="80" />
     <Property Name="ProductName" Type="varchar" MaxLength="150" />
     <Property Name="ProductType" Type="varchar" MaxLength="25" />
     <Property Name="ManufactureId" Type="varchar" MaxLength="3" />
@@ -77,12 +78,12 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="25" />
-    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="UserPassword" Type="varchar" MaxLength="25" />
     <Property Name="PathImage" Type="varchar" MaxLength="225" />
-    <Property Name="PhoneNo" Type="varchar" MaxLength="11" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="18" />
     <Property Name="UserRole" Type="varchar" MaxLength="10" />
   </EntityType>
   <Association Name="order_customers">
@@ -106,6 +107,30 @@
       </Principal>
       <Dependent Role="Orders">
         <PropertyRef Name="PaymentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetail_orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetail_products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -149,6 +174,14 @@
     <AssociationSet Name="order_payments" Association="Self.order_payments">
       <End Role="Payments" EntitySet="Payments" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetail_orders" Association="Self.orderdetail_orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetail_products" Association="Self.orderdetail_products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="product_categories" Association="Self.product_categories">
       <End Role="Categories" EntitySet="Categories" />

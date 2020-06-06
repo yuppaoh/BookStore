@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using shradhabookstores.EF;
 
-namespace shradhabookstores.Controllers
+namespace shradhabookstores.Controllers.Backend
 {
     public class UsersController : Controller
     {
@@ -17,7 +17,7 @@ namespace shradhabookstores.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View("~/Views/Backend/Users/Index.cshtml", db.Users.ToList());
         }
 
         // GET: Users/Details/5
@@ -32,13 +32,13 @@ namespace shradhabookstores.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View("~/Views/Backend/Users/Details.cshtml", user);
         }
 
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            return View("~/Views/Backend/Users/Create.cshtml");
         }
 
         // POST: Users/Create
@@ -46,7 +46,7 @@ namespace shradhabookstores.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Email,UserName,UserPassword,PathImage,PhoneNo,UserRole")] User user)
+        public ActionResult Create([Bind(Include = "UserId,Email,UserName,UserPassword,PhoneNo,UserRole")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace shradhabookstores.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View("~/Views/Backend/Users/Edit.cshtml", user);
         }
 
         // POST: Users/Edit/5
@@ -78,7 +78,7 @@ namespace shradhabookstores.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Email,UserName,UserPassword,PathImage,PhoneNo,UserRole")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,Email,UserName,UserPassword,PhoneNo,UserRole")] User user)
         {
             if (ModelState.IsValid)
             {

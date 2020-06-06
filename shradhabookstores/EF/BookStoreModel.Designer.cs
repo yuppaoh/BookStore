@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\MyProgram\Aptech\Subject\35_eProject-Sem3\src_code\shradhabookstores\shradhabookstores\EF\BookStoreModel.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\MyProgram\Aptech\Subject\35_eProject-Sem3\src_code\BookStore\shradhabookstores\EF\BookStoreModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

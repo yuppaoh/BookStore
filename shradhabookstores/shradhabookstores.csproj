@@ -129,8 +129,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Backend\CategoriesController.cs" />
+    <Compile Include="Controllers\Backend\ManufacturesController.cs" />
+    <Compile Include="Controllers\Backend\ProductsController.cs" />
+    <Compile Include="Controllers\Backend\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="EF\BookStoreModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +182,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\no-photo.png" />
     <Content Include="EF\BookStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookStoreModel.edmx</DependentUpon>
@@ -237,11 +240,23 @@
     <Content Include="Views\Backend\Categories\Details.cshtml" />
     <Content Include="Views\Backend\Categories\Edit.cshtml" />
     <Content Include="Views\Backend\Categories\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Backend\Shared\_Layout.cshtml" />
+    <Content Include="Views\Backend\Shared\Error.cshtml" />
+    <Content Include="Views\Backend\Users\Create.cshtml" />
+    <Content Include="Views\Backend\Users\Delete.cshtml" />
+    <Content Include="Views\Backend\Users\Details.cshtml" />
+    <Content Include="Views\Backend\Users\Edit.cshtml" />
+    <Content Include="Views\Backend\Users\Index.cshtml" />
+    <Content Include="Views\Backend\Manufactures\Create.cshtml" />
+    <Content Include="Views\Backend\Manufactures\Delete.cshtml" />
+    <Content Include="Views\Backend\Manufactures\Details.cshtml" />
+    <Content Include="Views\Backend\Manufactures\Edit.cshtml" />
+    <Content Include="Views\Backend\Manufactures\Index.cshtml" />
+    <Content Include="Views\Backend\Products\Create.cshtml" />
+    <Content Include="Views\Backend\Products\Delete.cshtml" />
+    <Content Include="Views\Backend\Products\Details.cshtml" />
+    <Content Include="Views\Backend\Products\Edit.cshtml" />
+    <Content Include="Views\Backend\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

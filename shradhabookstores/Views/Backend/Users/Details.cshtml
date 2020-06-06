@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/_ViewStart.cshtml";
+    Layout = "~/Views/Backend/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -11,14 +11,6 @@
     <h4>User</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
@@ -35,12 +27,20 @@
             @Html.DisplayFor(model => model.UserPassword)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.PathImage)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.PathImage)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
         <dt>

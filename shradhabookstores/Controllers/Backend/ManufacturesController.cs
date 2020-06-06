@@ -10,107 +10,107 @@ using shradhabookstores.EF;
 
 namespace shradhabookstores.Controllers.Backend
 {
-    public class CategoriesController : Controller
+    public class ManufacturesController : Controller
     {
         private BookStoreEntities db = new BookStoreEntities();
 
-        // GET: Categories
+        // GET: Manufactures
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Categories/Index.cshtml", db.Categories.ToList());
+            return View("~/Views/Backend/Manufactures/Index.cshtml", db.Manufactures.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Manufactures/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Manufacture manufacture = db.Manufactures.Find(id);
+            if (manufacture == null)
             {
                 return HttpNotFound();
             }
-            return View("~/Views/Backend/Categories/Details.cshtml", category);
+            return View("~/Views/Backend/Manufactures/Details.cshtml", manufacture);
         }
 
-        // GET: Categories/Create
+        // GET: Manufactures/Create
         public ActionResult Create()
         {
-            return View("~/Views/Backend/Categories/Create.cshtml");
+            return View("~/Views/Backend/Manufactures/Create.cshtml");
         }
 
-        // POST: Categories/Create
+        // POST: Manufactures/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,CategoryName")] Category category)
+        public ActionResult Create([Bind(Include = "ManufactureId,ManufactureName,ManufactureAddress,PhoneNo,Note")] Manufacture manufacture)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Manufactures.Add(manufacture);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(manufacture);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Manufactures/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Manufacture manufacture = db.Manufactures.Find(id);
+            if (manufacture == null)
             {
                 return HttpNotFound();
             }
-            return View("~/Views/Backend/Categories/Edit.cshtml", category);
+            return View("~/Views/Backend/Manufactures/Edit.cshtml", manufacture);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Manufactures/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryId,CategoryName")] Category category)
+        public ActionResult Edit([Bind(Include = "ManufactureId,ManufactureName,ManufactureAddress,PhoneNo,Note")] Manufacture manufacture)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(manufacture).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(manufacture);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Manufactures/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Manufacture manufacture = db.Manufactures.Find(id);
+            if (manufacture == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(manufacture);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Manufactures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            Manufacture manufacture = db.Manufactures.Find(id);
+            db.Manufactures.Remove(manufacture);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

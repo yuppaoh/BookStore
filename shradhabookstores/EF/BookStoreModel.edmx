@@ -21,7 +21,7 @@
           <Property Name="CustomerAddress" Type="varchar" MaxLength="100" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
           <Property Name="CustomerPassword" Type="varchar" MaxLength="20" />
-          <Property Name="CustomerStatus" Type="varchar" MaxLength="10" />
+          <Property Name="CustomerStatus" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufactures">
           <Key>
@@ -29,8 +29,8 @@
           </Key>
           <Property Name="ManufactureId" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="ManufactureName" Type="varchar" MaxLength="150" />
-          <Property Name="ManufactureAddress" Type="varchar" MaxLength="25" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
+          <Property Name="ManufactureAddress" Type="varchar" MaxLength="150" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="18" />
           <Property Name="Note" Type="varchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="OrderDetails">
@@ -69,6 +69,7 @@
           </Key>
           <Property Name="ProductId" Type="varchar" MaxLength="7" Nullable="false" />
           <Property Name="CategoryId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="ProductImage" Type="varchar" MaxLength="80" />
           <Property Name="ProductName" Type="varchar" MaxLength="150" />
           <Property Name="ProductType" Type="varchar" MaxLength="25" />
           <Property Name="ManufactureId" Type="varchar" MaxLength="3" />
@@ -82,12 +83,12 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="25" />
-          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UserPassword" Type="varchar" MaxLength="25" />
           <Property Name="PathImage" Type="varchar" MaxLength="225" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="11" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="18" />
           <Property Name="UserRole" Type="varchar" MaxLength="10" />
         </EntityType>
         <Association Name="order_customers">
@@ -111,6 +112,30 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderdetail_orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderdetail_products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,6 +180,14 @@
             <End Role="Payments" EntitySet="Payments" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="orderdetail_orders" Association="Self.orderdetail_orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="orderdetail_products" Association="Self.orderdetail_products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="product_categories" Association="Self.product_categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
@@ -186,7 +219,7 @@
           <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CustomerPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.order_customers" FromRole="Customers" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Manufacture">
@@ -195,8 +228,8 @@
           </Key>
           <Property Name="ManufactureId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ManufactureName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ManufactureAddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ManufactureAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Products" Relationship="Self.product_manufacture" FromRole="Manufactures" ToRole="Products" />
         </EntityType>
@@ -209,6 +242,8 @@
           <Property Name="ProductId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="UnitPrice" Type="Double" />
+          <NavigationProperty Name="Order" Relationship="Self.orderdetail_orders" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Product" Relationship="Self.orderdetail_products" FromRole="OrderDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -223,6 +258,7 @@
           <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
           <Property Name="OrderStatus" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customer" Relationship="Self.order_customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.orderdetail_orders" FromRole="Orders" ToRole="OrderDetails" />
           <NavigationProperty Name="Payment" Relationship="Self.order_payments" FromRole="Orders" ToRole="Payments" />
         </EntityType>
         <EntityType Name="Payment">
@@ -239,6 +275,7 @@
           </Key>
           <Property Name="ProductId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CategoryId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="ProductType" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="ManufactureId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -249,17 +286,18 @@
           <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Category" Relationship="Self.product_categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Manufacture" Relationship="Self.product_manufacture" FromRole="Products" ToRole="Manufactures" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.orderdetail_products" FromRole="Products" ToRole="OrderDetails" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserPassword" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="PathImage" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
           <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="product_categories">
@@ -298,6 +336,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="orderdetail_orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderdetail_products">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="order_payments">
           <End Role="Payments" Type="Self.Payment" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
@@ -330,6 +392,14 @@
           <AssociationSet Name="product_manufacture" Association="Self.product_manufacture">
             <End Role="Manufactures" EntitySet="Manufactures" />
             <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="orderdetail_orders" Association="Self.orderdetail_orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="orderdetail_products" Association="Self.orderdetail_products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="order_payments" Association="Self.order_payments">
             <End Role="Payments" EntitySet="Payments" />
@@ -410,6 +480,7 @@
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="ManufactureId" ColumnName="ManufactureId" />
