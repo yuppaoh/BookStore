@@ -1,0 +1,71 @@
+﻿@model shradhabookstores.EF.Product
+
+@{
+    ViewBag.Title = "ProductOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>ProductOrder</h2>
+
+<div>
+    <h4>Information about Order Product</h4>
+    <hr />
+    <div class="container" style="background-color: #F8F8F8">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    Total
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.ProductName)
+                </td>
+                <td>
+                    $
+                    @Html.DisplayFor(model => model.UnitPrice)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", name = "qty", value = "1" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UnitPrice)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><i style="color: blue">Fee (distance > 3km):</i></td>
+                <td>$2</td>
+            </tr>
+            <tr style="font-weight: bold">
+                <td></td>
+                <td></td>
+                <td>Total amount:</td>
+                <td>$27</td>
+            </tr>
+        </table>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.PaymentId, "PaymentId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PaymentId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PaymentId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Product")
+</p>

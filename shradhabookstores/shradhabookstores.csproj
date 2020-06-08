@@ -129,7 +129,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Backend\CategoriesController.cs" />
+    <Compile Include="Controllers\Backend\CustomersController.cs" />
     <Compile Include="Controllers\Backend\ManufacturesController.cs" />
+    <Compile Include="Controllers\Backend\OrdersController.cs" />
+    <Compile Include="Controllers\Backend\PaymentsController.cs" />
     <Compile Include="Controllers\Backend\ProductsController.cs" />
     <Compile Include="Controllers\Backend\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -182,6 +185,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\images\no-photo.png" />
     <Content Include="EF\BookStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -233,7 +237,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Log.cshtml" />
     <Content Include="Views\Home\Ex.cshtml" />
     <Content Include="Views\Backend\Categories\Create.cshtml" />
     <Content Include="Views\Backend\Categories\Delete.cshtml" />
@@ -257,6 +261,23 @@
     <Content Include="Views\Backend\Products\Details.cshtml" />
     <Content Include="Views\Backend\Products\Edit.cshtml" />
     <Content Include="Views\Backend\Products\Index.cshtml" />
+    <Content Include="Views\Backend\Customers\Create.cshtml" />
+    <Content Include="Views\Backend\Customers\Delete.cshtml" />
+    <Content Include="Views\Backend\Customers\Details.cshtml" />
+    <Content Include="Views\Backend\Customers\Edit.cshtml" />
+    <Content Include="Views\Backend\Customers\Index.cshtml" />
+    <Content Include="Views\Home\ProductOrder.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Backend\Payments\Create.cshtml" />
+    <Content Include="Views\Backend\Payments\Delete.cshtml" />
+    <Content Include="Views\Backend\Payments\Details.cshtml" />
+    <Content Include="Views\Backend\Payments\Edit.cshtml" />
+    <Content Include="Views\Backend\Payments\Index.cshtml" />
+    <Content Include="Views\Backend\Orders\Create.cshtml" />
+    <Content Include="Views\Backend\Orders\Delete.cshtml" />
+    <Content Include="Views\Backend\Orders\Details.cshtml" />
+    <Content Include="Views\Backend\Orders\Edit.cshtml" />
+    <Content Include="Views\Backend\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

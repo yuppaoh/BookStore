@@ -14,7 +14,7 @@
     <Property Name="CustomerId" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="CustomerName" Type="varchar" MaxLength="50" />
     <Property Name="CustomerAddress" Type="varchar" MaxLength="100" />
-    <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="18" />
     <Property Name="CustomerPassword" Type="varchar" MaxLength="20" />
     <Property Name="CustomerStatus" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>

@@ -19,7 +19,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @if (String.IsNullOrEmpty(ViewBag.Product.ProductImage))
             {
                 <img class="bd-placeholder-img card-img-top" width="39%" height="200" src="~/Content/images/no-photo.png" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">

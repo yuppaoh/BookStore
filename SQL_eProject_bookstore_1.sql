@@ -72,7 +72,7 @@ create table Customers
    CustomerId           varchar(10)      not null,
    CustomerName         varchar(50)      null,
    CustomerAddress      varchar(100)     null,
-   PhoneNo              varchar(10)      null,
+   PhoneNo              varchar(18)      null,
    CustomerPassword     varchar(20)      null,
    CustomerStatus       varchar(10)      not null    default 'Enable',
    primary key (CustomerId)

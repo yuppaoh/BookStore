@@ -47,9 +47,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.ProductImage)
-        </td>*@
         <td>
             @if (String.IsNullOrEmpty(item.ProductImage))
             {
