@@ -24,10 +24,9 @@ namespace shradhabookstores.Controllers
         {
             var products = db.Products.Include(p => p.Category).Include(p => p.Manufacture);
             ViewBag.ListProducts = products;
-            
+            TempData["login_id"] = ViewBag.Msg;
             return View();
         }
-
 
         public ActionResult ProductDetail(string id)
         {
@@ -40,11 +39,20 @@ namespace shradhabookstores.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", product.CategoryId);
+            ViewBag.ManufactureId = new SelectList(db.Manufactures, "ManufactureId", "ManufactureName", product.ManufactureId);
+            ViewBag.Product = product;
             return View(product);
         }
 
         public ActionResult ProductOrder(string id)
         {
+            if (String.IsNullOrEmpty(Convert.ToString(Session["LoginUser"])))
+            {
+               
+                return RedirectToAction("Product");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -55,8 +63,50 @@ namespace shradhabookstores.Controllers
                 return HttpNotFound();
             }
             ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName");
+            ViewBag.paymentlist =  db.Payments.ToList();
             return View(product);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProductOrder(int Distance, int PaymentId, string ProductId, int Quantity, double UnitPrice)
+        {
+            if (ModelState.IsValid)
+            {
+                Order order = new Order();
+                order.OrderId = "1".PadLeft(8, '0');
+                order.CustomerId = Convert.ToString(Session["LoginUser"]);
+                order.OrderDate = DateTime.Now;
+                order.PlaceOfDelivery = "";
+                order.Distance = Distance;
+                order.PaymentId = PaymentId;
+                db.Orders.Add(order);
+
+                //
+                //(DateTime.Now - order.OrderDate).Value.Hours ;
+
+
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.Order = order;
+                orderDetail.ProductId = ProductId;
+                orderDetail.Quantity = Quantity;
+                orderDetail.UnitPrice = UnitPrice;
+                db.OrderDetails.Add(orderDetail);
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+
+            //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", order.CustomerId);
+            //ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName", order.PaymentId);
+            //return View(order);
+        }
+
+
+
 
         // Login
         // -----------------------------------------------------
@@ -116,7 +166,7 @@ namespace shradhabookstores.Controllers
                 {
                     //return String.Format("Xin chao anh {0} {1}", objEmployeeLogin.EmpName, objEmployeeLogin.EmpRole);
                     TempData["msgLoi"] = String.Empty;
-                    TempData["username"] = login;
+                    //TempData["username"] = login;
                     Session["LoginUser"] = login;
 
                     //return View();
@@ -126,9 +176,15 @@ namespace shradhabookstores.Controllers
             }
         }
 
-            // -----------------------------------------------------
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Product");
+        }
 
-            public ActionResult About()
+        // -----------------------------------------------------
+
+        public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 

@@ -2,12 +2,12 @@
 
 @{
     ViewBag.Title = "Product";
-    //var _name = Session["LoginUser"] as shradhabookstores.Controllers.HomeController;
+
 }
 
 <link rel="stylesheet" href="~/Content/bootstrap.min.css">
 <link rel="stylesheet" href="~/Content/product.css">
-@*<h3>@_name</h3>*@
+<link rel="stylesheet" href="~/Content/login.css">
 
 <div class="wrapper">
     <!-- Sidebar  -->
@@ -33,7 +33,7 @@
                         <a href="#">Magazines</a>
                     </li>
                     <li>
-                        <a href="#">Textbooks</a>
+                        <a href="/Home/Index">Textbooks</a>
                     </li>
                     <li>
                         <a href="#">Notebooks</a>
@@ -65,13 +65,13 @@
                 </a>
                 <ul class="collapse list-unstyled" id="pageSubmenu_file">
                     <li>
-                        <a href="#">World</a>
+                        <a href="#">world</a>
                     </li>
                     <li>
-                        <a href="#">Eecel</a>
+                        <a href="#">excel</a>
                     </li>
                     <li>
-                        <a href="#">Pdf</a>
+                        <a href="#">pdf</a>
                     </li>
                 </ul>
             </li>
@@ -152,7 +152,7 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <small><span>@TempData["username"]</span></small>
+        <br/>
 
         @foreach (var item in ViewBag.ListProducts)
         {
@@ -180,6 +180,8 @@
 
         <div class="container" style="margin-top: -10px; padding-top: 0px;">
             <h4>List of Product</h4>
+            
+
         </div>
         <div class="container">
             <div class="row" style="margin-left: 0px;">
@@ -189,16 +191,18 @@
                     {
 
                         <div class="col-md-3 col-lg-2 col-sm-3 product">
-                            <div class="row">
-                                @if (String.IsNullOrEmpty(item.ProductImage))
-                                {
-                                    <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/Content/images/no-photo.png" style="padding: 5px 0 5px 0;">
-                                }
-                                else
-                                {
-                                    <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/UploadedFiles/@item.ProductImage" style="padding: 5px 0 5px 0; border-radius: 10px;">
-                                }
-                            </div>
+                            <a href="/Home/ProductDetail/@item.ProductId">
+                                <div class="row">
+                                    @if (String.IsNullOrEmpty(item.ProductImage))
+                                    {
+                                        <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/Content/images/no-photo.png" style="padding: 5px 0 5px 0;">
+                                    }
+                                    else
+                                    {
+                                        <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/UploadedFiles/@item.ProductImage" style="padding: 5px 0 5px 0; border-radius: 10px;">
+                                    }
+                                </div>
+                            </a>
                             <div class="row product-name">
                                 <span>@item.ProductName</span>
                             </div>
@@ -206,7 +210,7 @@
                             <div class="row product-price">
                                 <small><span>Price: $ @item.UnitPrice </span></small>
 
-                                <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy">Buy now</a>
+                                <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy" id="buynow">Buy now</a>
 
                             </div>
                         </div>
@@ -309,7 +313,21 @@
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
-                });
-            });
+        });
+
+
+        
+
+        function check_err() {
+            var lbl_err = TempData["login_id"].ToString();
+            $('#login_id').html(lbl_err);
+        }
+        $('#buynow').click(
+            function () {
+                check_err();
+            }
+        );
+    });
+
 </script>
 

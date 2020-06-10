@@ -28,8 +28,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Product", "Product", "Home")</li>
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("Home", "Product", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Backend", "Index", "Categories")</li>
@@ -37,11 +37,11 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @*@if(objEmployeeLogin == null)
-                        {
-                            <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                        }*@
+        {
+            <li>@Html.ActionLink("Login", "Login", "Home")</li>
+        }*@
 
-                    @if (@TempData["username"] == null)
+                    @if (Session["LoginUser"] == null)
                     {
                         <li>@Html.ActionLink("Login", "Login", "Home")</li>
                     }
@@ -49,8 +49,9 @@
                     {
                         <li style="text-align: center;">
                             <span><i class="glyphicon glyphicon-user"></i></span><br />
-                            <span>@TempData["username"]</span>
+                            <span>@Session["LoginUser"]</span>
                         </li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                     }
 
                 </ul>

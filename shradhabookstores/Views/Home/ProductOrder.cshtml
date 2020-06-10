@@ -4,68 +4,137 @@
     ViewBag.Title = "ProductOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    var rnd = new Random(DateTime.Now.Millisecond);
+    int kmRandom = rnd.Next(1, 10);
+
+    int feeShip = 0;
+    if (kmRandom >= 1 && kmRandom < 3)
+    {
+        feeShip = 0;
+    }
+    else if ((kmRandom >= 3 && kmRandom <= 6))
+    {
+        feeShip = 3;
+    }
+    else if ((kmRandom > 6 && kmRandom <= 9))
+    {
+        feeShip = 6;
+    }
 }
 
-<h2>ProductOrder</h2>
+<center><h3>Information of Order Product</h3></center>
 
-<div>
-    <h4>Information about Order Product</h4>
-    <hr />
-    <div class="container" style="background-color: #F8F8F8">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>
-                    Total
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.ProductName)
-                </td>
-                <td>
-                    $
-                    @Html.DisplayFor(model => model.UnitPrice)
-                </td>
-                <td>
-                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", name = "qty", value = "1" } })
-                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.UnitPrice)
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td><i style="color: blue">Fee (distance > 3km):</i></td>
-                <td>$2</td>
-            </tr>
-            <tr style="font-weight: bold">
-                <td></td>
-                <td></td>
-                <td>Total amount:</td>
-                <td>$27</td>
-            </tr>
-        </table>
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.PaymentId, "PaymentId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PaymentId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PaymentId, "", new { @class = "text-danger" })
+@using (Html.BeginForm("ProductOrder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="Distance" id="Distance" value="@kmRandom" />
+    <input type="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
+    <input type="hidden" name="UnitPrice" id="UnitPrice" value="@Model.UnitPrice" />
+
+
+    <br /><br />
+    <center>
+        <div class="container">
+            <div colspan="2" class="col-md-6" style="text-align: right;">Payment</div>
+            <div class="col-md-6" style="text-align: left;">
+                <select name="PaymentId" id="PaymentId" class="form-control">
+                    @foreach (var payment in ViewBag.paymentlist)
+                    {
+                        <option value="@payment.PaymentId">@payment.PaymentName</option>
+                    }
+                </select>
             </div>
-        </div>*@
-    </div>
+        </div>
+    </center>
 
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Product")
-</p>
+    <div class="container">
+        <div class="row">
+            <br />
+            <table class="table" border="1">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </td>
+                    <td>
+                        $
+                        @Html.DisplayFor(model => model.UnitPrice)
+                    </td>
+                    <td>
+                        <input type="number" name="Quantity" id="Quantity" value="1" class="form-control" max="@Model.Quantity" min="1" />
+                    </td>
+                    <td>
+                        $ <span id="total">@Model.UnitPrice</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td><i style="color: blue">Fee (distance: @kmRandom km):</i></td>
+                    <td>$ @feeShip</td>
+                </tr>
+                <tr style="font-weight: bold">
+                    <td colspan="2"></td>
+                    <td>Total amount:</td>
+                    <td>$ <span id="subtotal"></span></td>
+                </tr>
+                <tr style="font-weight: bold">
+                    <td colspan="2"></td>
+                    <td>
+                        Payment by
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6" style="text-align: right; margin-top: 3px;">
+                @Html.ActionLink("<< Back to List", "Product")
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <button class="btn btn-primary" style="text-align: right;">Confirm</button>
+            </div>
+        </div>
+        </div>
+    </div>
+}
+
+
+@section scripts {
+    <script>
+    $(document).ready(function () {
+
+        function calcSubtotal() {
+            var qty = $('#Quantity').val();
+            var price = @Model.UnitPrice;
+            var total = qty * price;
+            $('#total').html(total);
+
+            var fee = @feeShip;
+            var subtotal = total + fee;
+            $('#subtotal').html(subtotal);
+        }
+
+
+        $('#Quantity').change(
+            function () {
+                calcSubtotal();
+            }
+        );
+
+        calcSubtotal(); // khi chay lan dau tien, goi ham nay
+    });
+    </script>
+}

@@ -10,7 +10,97 @@
 <div>
     <h4>Product</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    @if (String.IsNullOrEmpty(ViewBag.Product.ProductImage))
+                    {
+                        <img class="bd-placeholder-img card-img-top" width="39%" height="200" src="~/Content/images/no-photo.png" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+                    }
+                    else
+                    {
+                        <img class="bd-placeholder-img card-img-top" width="60%" height="200" src="~/UploadedFiles/@ViewBag.Product.ProductImage" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+                    }
+                </div>
+            </div>
+            <div class="col-md-9">
+                <dl class="dl-horizontal">
+                    <dt>Price</dt>
+
+                    <dd style="font-weight: bold; color: red;">
+                        $
+                        @Html.DisplayFor(model => model.UnitPrice)
+                    </dd>
+
+                    <dt>Name</dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </dd>
+
+                    <dt>Type</dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductType)
+                    </dd>
+
+                    <dt>Author</dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Author)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ReleaseDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ReleaseDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Quantity)
+                    </dd>
+
+                    <dt>Manufacture</dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Manufacture.ManufactureName)
+                    </dd>
+                    <dt>Description</dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Note)
+                    </dd>
+
+                </dl>
+                <a href="/Home/ProductOrder/@Model.ProductId" class="btn bg-primary btn-xs btn-buy">Buy now</a>
+            </div>
+        </div>
+    </div>
+
+
+    @*<dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+        <dd>
+            <div class="col-md-5">
+                @if (String.IsNullOrEmpty(ViewBag.Product.ProductImage))
+                {
+                    <img class="bd-placeholder-img card-img-top" width="39%" height="200" src="~/Content/images/no-photo.png" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+                }
+                else
+                {
+                    <img class="bd-placeholder-img card-img-top" width="39%" height="200" src="~/UploadedFiles/@ViewBag.Product.ProductImage" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+                }
+            </div>
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
@@ -83,7 +173,7 @@
             @Html.DisplayFor(model => model.Manufacture.ManufactureName)
         </dd>
 
-    </dl>
+    </dl>*@
 </div>
 <p>
     @Html.ActionLink("Back to List", "Product")
