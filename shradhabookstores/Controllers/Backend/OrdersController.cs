@@ -17,8 +17,14 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Payment);
-            return View("~/Views/Backend/Orders/Index.cshtml", orders.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                var orders = db.Orders.Include(o => o.Customer).Include(o => o.Payment);
+                return View("~/Views/Backend/Orders/Index.cshtml", orders.ToList());
+            }
+            return RedirectToAction("../Users/Login");
+
+            
         }
 
         // GET: Orders/Details/5
@@ -39,13 +45,9 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Orders/Create
         public ActionResult Create(string order_id, string customer_id, int payment_id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName");
             ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName");
+
             return View("~/Views/Backend/Orders/Create.cshtml");
         }
 
@@ -115,7 +117,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View("~/Views/Backend/Orders/Delete.cshtml", order);
         }
 
         // POST: Orders/Delete/5

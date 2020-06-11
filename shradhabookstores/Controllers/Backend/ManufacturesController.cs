@@ -17,7 +17,11 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Manufactures
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Manufactures/Index.cshtml", db.Manufactures.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                return View("~/Views/Backend/Manufactures/Index.cshtml", db.Manufactures.ToList());
+            }
+            return RedirectToAction("../Users/Login");
         }
 
         // GET: Manufactures/Details/5
@@ -101,7 +105,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(manufacture);
+            return View("~/Views/Backend/Manufactures/Delete.cshtml", manufacture);
         }
 
         // POST: Manufactures/Delete/5

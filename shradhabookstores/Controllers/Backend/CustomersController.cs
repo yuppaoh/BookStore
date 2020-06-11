@@ -17,7 +17,13 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Customers
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Customers/Index.cshtml", db.Customers.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                return View("~/Views/Backend/Customers/Index.cshtml", db.Customers.ToList());
+            }
+
+            return RedirectToAction("../Users/Login");
+            
         }
 
         // GET: Customers/Details/5
@@ -101,10 +107,10 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View("~/Views/Backend/Customers/Delete.cshtml", customer);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Customers/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

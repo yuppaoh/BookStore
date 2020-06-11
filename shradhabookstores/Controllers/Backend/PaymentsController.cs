@@ -17,7 +17,11 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Payments
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Payments/Index.cshtml", db.Payments.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                return View("~/Views/Backend/Payments/Index.cshtml", db.Payments.ToList());
+            }
+            return RedirectToAction("../Users/Login");
         }
 
         // GET: Payments/Details/5
@@ -101,7 +105,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(payment);
+            return View("~/Views/Backend/Payments/Delete.cshtml", payment);
         }
 
         // POST: Payments/Delete/5

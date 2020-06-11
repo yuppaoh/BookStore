@@ -22,8 +22,23 @@ namespace shradhabookstores.Controllers
 
         public ActionResult Product()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Manufacture);
+            //var type = Request.Form["type"];
+            var type = HttpContext.Request.Params.Get("type");
+            IQueryable<Product> products = null;
+            if (String.IsNullOrEmpty(type))
+            {
+                products = db.Products.Include(p => p.Category).Include(p => p.Manufacture);
+            } else
+            {
+                products = db.Products
+                    .Where(p => p.CategoryId == type)
+                    .Include(p => p.Category).Include(p => p.Manufacture);
+            }
+
+            var categories = db.Categories.ToList();
+
             ViewBag.ListProducts = products;
+            ViewBag.ListCategories = categories;
             TempData["login_id"] = ViewBag.Msg;
             return View();
         }
@@ -49,7 +64,9 @@ namespace shradhabookstores.Controllers
         {
             if (String.IsNullOrEmpty(Convert.ToString(Session["LoginUser"])))
             {
-               
+                //ViewBag.Msg = "vui long dang nhp..";  // neu su dung ViewBag sau khi refresh se mat data
+                TempData["notification"] = "Please, login to buy product!";
+                //Session["notification"] = "To buy product, please login!"; // co the su dung thay the TempData[""]
                 return RedirectToAction("Product");
             }
 
@@ -74,7 +91,7 @@ namespace shradhabookstores.Controllers
             if (ModelState.IsValid)
             {
                 Order order = new Order();
-                order.OrderId = "1".PadLeft(8, '0');
+                order.OrderId = Convert.ToString(db.Orders.Count() + 1).PadLeft(8,'0');
                 order.CustomerId = Convert.ToString(Session["LoginUser"]);
                 order.OrderDate = DateTime.Now;
                 order.PlaceOfDelivery = "";
@@ -93,19 +110,67 @@ namespace shradhabookstores.Controllers
                 orderDetail.UnitPrice = UnitPrice;
                 db.OrderDetails.Add(orderDetail);
 
-
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View();
-
-            //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", order.CustomerId);
-            //ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName", order.PaymentId);
-            //return View(order);
         }
 
+        // GET: Orders
+        public ActionResult Order()
+        {
+            var customer_id = Convert.ToString(Session["LoginUser"]);
+            var orders = db.Orders
+                .Where(p => p.CustomerId == customer_id)
+                .Include(o => o.Customer).Include(o => o.Payment);
+            return View(orders.ToList());
+        }
 
+        // GET: Orders/Details/5
+        public ActionResult OrderDetails(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = db.Orders.Find(id);
+
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View("~/Views/Backend/Orders/Detail.cshtml", order);
+        }
+
+        public ActionResult CancelOrder()
+        {
+            return RedirectToAction("Order");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelOrder(string order_id)
+        {
+            if (ModelState.IsValid)
+            {
+                Order order = db.Orders.Where(p => p.OrderId == order_id).FirstOrDefault();
+                int _time = (DateTime.Now - order.OrderDate).Value.Hours;
+
+                if (_time<=12)
+                {
+                    order.OrderStatus = "Cancel";
+                    db.SaveChanges();
+                    //return RedirectToAction("Order");
+                }
+                else
+                {
+                    TempData["msg"] = "Sorry, expire time to cancel!";
+                }
+                return RedirectToAction("Order");
+
+            }
+            return View();
+
+        }
 
 
         // Login
@@ -182,6 +247,44 @@ namespace shradhabookstores.Controllers
             return RedirectToAction("Product");
         }
 
+        // GET: Customers/Register
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: Customers/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(string CustomerId, string CustomerPassword, string CustomerName, string CustomerAddress, string PhoneNo)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                if (CustomerId.Length < 2 || CustomerId.Length > 10)
+                {
+                    TempData["msg_id"] = "username from 2 to 10 characters";
+                    return View();
+                }
+                Customer customer = new Customer();
+
+                customer.CustomerId = CustomerId;
+                customer.CustomerName = CustomerName;
+                customer.CustomerAddress = CustomerAddress;
+                customer.PhoneNo = PhoneNo;
+                customer.CustomerPassword = CustomerPassword;
+                customer.CustomerStatus = "Enable";
+
+                db.Customers.Add(customer);
+                db.SaveChanges();
+                return RedirectToAction("Login");
+            }
+
+            return View();
+        }
+
+
+
         // -----------------------------------------------------
 
         public ActionResult About()
@@ -197,14 +300,5 @@ namespace shradhabookstores.Controllers
 
             return View();
         }
-
-        public ActionResult Ex()
-        {
-            ViewBag.Message = "Ex page.";
-
-            return View();
-        }
-
-
     }
 }

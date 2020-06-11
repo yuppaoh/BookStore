@@ -5,306 +5,235 @@
 
 }
 
-<link rel="stylesheet" href="~/Content/bootstrap.min.css">
+@*<link rel="stylesheet" href="~/Content/bootstrap.min.css">*@
 <link rel="stylesheet" href="~/Content/product.css">
 <link rel="stylesheet" href="~/Content/login.css">
 
-<div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>Categories</h3>
-            <strong>BS</strong>
-        </div>
-        <ul class="list-unstyled components">
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-home"></i>
-                    Book
-                </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="#">Publisher</a>
-                    </li>
-                    <li>
-                        <a href="#">Novels</a>
-                    </li>
-                    <li>
-                        <a href="#">Magazines</a>
-                    </li>
-                    <li>
-                        <a href="/Home/Index">Textbooks</a>
-                    </li>
-                    <li>
-                        <a href="#">Notebooks</a>
-                    </li>
-                    <li>
-                        <a href="#">Essaybooks</a>
-                    </li>
-                    <li>
-                        <a href="#">General Knowledges</a>
-                    </li>
-                    <li>
-                        <a href="#">Vocabulary</a>
-                    </li>
-                    <li>
-                        <a href="#">Learning</a>
-                    </li>
-                    <li>
-                        <a href="#">Other</a>
-                    </li>
-
-                </ul>
-
-            </li>
-
-            <li>
-                <a href="#pageSubmenu_file" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="fas fa-copy"></i>
-                    File
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu_file">
-                    <li>
-                        <a href="#">world</a>
-                    </li>
-                    <li>
-                        <a href="#">excel</a>
-                    </li>
-                    <li>
-                        <a href="#">pdf</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#pageSubmenu_cd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="fas fa-copy"></i>
-                    CDs
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu_cd">
-                    <li>
-                        <a href="#">Readable</a>
-                    </li>
-                    <li>
-                        <a href="#">Writable</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#pageSubmenu_dvd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="fas fa-copy"></i>
-                    DVDs
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu_dvd">
-                    <li>
-                        <a href="#">Readable</a>
-                    </li>
-                    <li>
-                        <a href="#">Writable</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#pageSubmenu_ut" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="fas fa-copy"></i>
-                    Utilities
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu_ut">
-                    <li>
-                        <a href="#">Cover</a>
-                    </li>
-                    <li>
-                        <a href="#">Pen</a>
-                    </li>
-                    <li>
-                        <a href="#">Pencil</a>
-                    </li>
-                    <li>
-                        <a href="#">Paper</a>
-                    </li>
-                    <li>
-                        <a href="#">Sketches</a>
-                    </li>
-
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-question"></i>
-                    FAQ
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-paper-plane"></i>
-                    Contact
-                </a>
-            </li>
-        </ul>
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="" class="download">Download file</a>
-            </li>
-            <li>
-                <a href="" class="article">Back to article</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Page Content  -->
-    <div id="content">
-        <br/>
-
-        @foreach (var item in ViewBag.ListProducts)
-        {
-            if (item.CategoryId == "B1")
-            {
-                TempData["book"] = "List of Book";
-
-            }
-            else if (item.CategoryId == "C1")
-            {
-                TempData["cd"] = "List of CDs";
-
-            }
-            else if (item.CategoryId == "F1")
-            {
-                TempData["file"] = "List of Files";
-            }
-        }
-
-
-        @*@if (TempData["book"] != null)
-        {
-            <h3>@TempData["book"]</h3>
-        }*@
-
-        <div class="container" style="margin-top: -10px; padding-top: 0px;">
-            <h4>List of Product</h4>
-            
-
-        </div>
-        <div class="container">
-            <div class="row" style="margin-left: 0px;">
-                @foreach (var item in ViewBag.ListProducts)
-                {
-                    if (item.CategoryId != null)
-                    {
-
-                        <div class="col-md-3 col-lg-2 col-sm-3 product">
-                            <a href="/Home/ProductDetail/@item.ProductId">
-                                <div class="row">
-                                    @if (String.IsNullOrEmpty(item.ProductImage))
-                                    {
-                                        <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/Content/images/no-photo.png" style="padding: 5px 0 5px 0;">
-                                    }
-                                    else
-                                    {
-                                        <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/UploadedFiles/@item.ProductImage" style="padding: 5px 0 5px 0; border-radius: 10px;">
-                                    }
-                                </div>
-                            </a>
-                            <div class="row product-name">
-                                <span>@item.ProductName</span>
-                            </div>
-
-                            <div class="row product-price">
-                                <small><span>Price: $ @item.UnitPrice </span></small>
-
-                                <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy" id="buynow">Buy now</a>
-
-                            </div>
-                        </div>
-
-
-
-
-                        @*<div class="col-md-3 col-sm-3 col-sm-3 productBook">
-                            <a href="/Home/ProductDetail/@item.ProductId">
-                                @if (String.IsNullOrEmpty(item.ProductImage))
-                                {
-                                    <img class="bd-placeholder-img card-img-top img-product img-thumbnail" src="~/Content/images/no-photo.png">
-                                }
-                                else
-                                {
-                                    <div class=" row productimage">
-                                        <img class="bd-placeholder-img card-img-top img-product img-thumbnail" width="100%" height="100%" src="~/UploadedFiles/@item.ProductImage">
-                                    </div>
-                                }
-                            </a>
-
-                            <div class="row name">
-                                <div class="col-md-12">
-                                    <span>@item.ProductName</span>
-                                </div>
-                            </div>
-
-                            <div class="row price">
-                                <div class="col-md-7 col-xs-7">
-                                    <span>Price: $ @item.UnitPrice</span>
-                                </div>
-                                <div class="col-md-5 col-sx-5">
-                                    <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy">Buy now</a>
-                                </div>
-                            </div>
-                        </div>*@
-
-                    }
-                }
+<div class="container-fluid">
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Categories</h3>
+                <strong>BS</strong>
             </div>
-        </div>
+            <ul class="list-unstyled" style="margin-left: 10px;">
+                @foreach(var c in ViewBag.ListCategories)
+                {
+                    <li>
+                        <a href="/Home/Product?type=@c.CategoryId">@c.CategoryName</a>
+                    </li>
+                }
+            </ul>
 
-        @*@if (TempData["cd"] != null)
-        {
-            <h3>@TempData["cd"]</h3>
-        }
-        <div class="row center-block" style="margin-left: 6px;">
+
+            @*<ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        Book
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Publisher</a>
+                        </li>
+                        <li>
+                            <a href="#">Novels</a>
+                        </li>
+                        <li>
+                            <a href="#">Magazines</a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index">Textbooks</a>
+                        </li>
+                        <li>
+                            <a href="/Home/Product?type=B1" data-type-id="B1" class="link-search-category">Notebooks</a>
+                        </li>
+                        <li>
+                            <a href="#">Essaybooks</a>
+                        </li>
+                        <li>
+                            <a href="#">General Knowledges</a>
+                        </li>
+                        <li>
+                            <a href="#">Vocabulary</a>
+                        </li>
+                        <li>
+                            <a href="#">Learning</a>
+                        </li>
+                        <li>
+                            <a href="#">Other</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu_file" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        File
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu_file">
+                        <li>
+                            <a href="#">world</a>
+                        </li>
+                        <li>
+                            <a href="#">excel</a>
+                        </li>
+                        <li>
+                            <a href="#">pdf</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu_cd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        CDs
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu_cd">
+                        <li>
+                            <a href="#">Readable</a>
+                        </li>
+                        <li>
+                            <a href="#">Writable</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu_dvd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        DVDs
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu_dvd">
+                        <li>
+                            <a href="#">Readable</a>
+                        </li>
+                        <li>
+                            <a href="#">Writable</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu_ut" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Utilities
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu_ut">
+                        <li>
+                            <a href="#">Cover</a>
+                        </li>
+                        <li>
+                            <a href="#">Pen</a>
+                        </li>
+                        <li>
+                            <a href="#">Pencil</a>
+                        </li>
+                        <li>
+                            <a href="#">Paper</a>
+                        </li>
+                        <li>
+                            <a href="#">Sketches</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="" class="download">Download file</a>
+                </li>
+                <li>
+                    <a href="" class="article">Back to article</a>
+                </li>
+            </ul>*@
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <br />
+
             @foreach (var item in ViewBag.ListProducts)
             {
-                if (item.CategoryId == "C1" || item.CategoryId == "C2")
+                if (item.CategoryId == "B1")
                 {
-                    <div class="col-md-3 col-sm-3 col-sm-3 productCd">
-                        <a href="/Home/ProductDetail/@item.ProductId">
-                            @if (String.IsNullOrEmpty(item.ProductImage))
-                            {
-                                <img class="bd-placeholder-img card-img-top img-product img-thumbnail" src="~/Content/images/no-photo.png">
-                            }
-                            else
-                            {
-                                <div class=" row productimage">
-                                    <img class="bd-placeholder-img card-img-top img-product img-thumbnail" width="100%" height="100%" src="~/UploadedFiles/@item.ProductImage">
-                                </div>
-                            }
-                        </a>
-
-                        <div class="row name">
-                            <div class="col-md-12">
-                                <span>@item.ProductName</span>
-                            </div>
-                        </div>
-
-                        <div class="row price">
-                            <div class="col-md-7 col-xs-7">
-                                <span>Price: $ @item.UnitPrice</span>
-                            </div>
-                            <div class="col-md-5 col-sx-5">
-                                <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy">Buy now</a>
-                            </div>
-                        </div>
-                    </div>
+                    TempData["book"] = "List of Book";
 
                 }
+                else if (item.CategoryId == "C1")
+                {
+                    TempData["cd"] = "List of CDs";
+
+                }
+                else if (item.CategoryId == "F1")
+                {
+                    TempData["file"] = "List of Files";
+                }
             }
+
+            <div class="container" style="margin-top: -10px; padding-top: 0px;">
+                <h4>List of Product</h4>
+                <center>
+                    @if (TempData["notification"] != null && !String.IsNullOrEmpty(TempData["notification"].ToString()))
+                    {
+                        <span class="" style="background-color: #eaf64e; color: red; font-size: larger; font-style: italic">@TempData["notification"]</span><br />
+                    }
+                    <br />
+                </center>
+
+            </div>
+            <div class="container">
+                <div class="row" style="margin-left: 0px;">
+                    @foreach (var item in ViewBag.ListProducts)
+                    {
+                        if (item.CategoryId != null)
+                        {
+
+                            <div class="col-md-3 col-lg-2 col-sm-3 product">
+                                <a href="/Home/ProductDetail/@item.ProductId">
+                                    <div class="row">
+                                        @if (String.IsNullOrEmpty(item.ProductImage))
+                                        {
+                                            <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/Content/images/no-photo.png" style="padding: 5px 0 5px 0;">
+                                        }
+                                        else
+                                        {
+                                            <img class="bd-placeholder-img card-img-top" width="80%" height="200" src="~/UploadedFiles/@item.ProductImage" style="padding: 5px 0 5px 0; border-radius: 10px;">
+                                        }
+                                    </div>
+                                </a>
+                                <div class="row product-name">
+                                    <span>@item.ProductName</span>
+                                </div>
+
+                                <div class="row product-price">
+                                    <small><span>Price: $ @item.UnitPrice </span></small>
+
+                                    <a href="/Home/ProductOrder/@item.ProductId" class="btn bg-primary btn-xs btn-buy" id="buynow">Buy now</a>
+
+                                </div>
+                            </div>
+
+
+
+
+                        }
+                    }
+                </div>
+            </div>
+
         </div>
-
-        @if (TempData["file"] != null)
-        {
-            <h3>@TempData["file"]</h3>
-        }*@
-
-
-
     </div>
-    </div>
+</div>
 
 <!-- jQuery CDN -->
 <script src="~/Vendor/jquery-1.12.0.min.js"></script>
@@ -315,9 +244,6 @@
             $('#sidebar').toggleClass('active');
         });
 
-
-        
-
         function check_err() {
             var lbl_err = TempData["login_id"].ToString();
             $('#login_id').html(lbl_err);
@@ -327,6 +253,17 @@
                 check_err();
             }
         );
+
+        //$('.link-search-category').click(function (e) {
+        //    e.preventDefault();
+
+        //    var formData = new FormData();
+        //    formData.append("type", $(this).data("type-id"));
+
+        //    var request = new XMLHttpRequest();
+        //    request.open("GET", "/Home/Product");
+        //    request.send(formData);
+        //});
     });
 
 </script>

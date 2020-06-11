@@ -17,7 +17,14 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Categories
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Categories/Index.cshtml", db.Categories.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                return View("~/Views/Backend/Categories/Index.cshtml", db.Categories.ToList());
+            }
+
+            return RedirectToAction("../Users/Login");
+
+            
         }
 
         // GET: Categories/Details/5
@@ -86,7 +93,7 @@ namespace shradhabookstores.Controllers.Backend
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View("~/Views/Backend/Categories/Edit.cshtml", category);
         }
 
         // GET: Categories/Delete/5
@@ -101,7 +108,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View("~/Views/Backend/Categories/Delete.cshtml", category);
         }
 
         // POST: Categories/Delete/5

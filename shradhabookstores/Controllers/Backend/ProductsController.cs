@@ -18,8 +18,13 @@ namespace shradhabookstores.Controllers.Backend
         // GET: Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Manufacture);
-            return View("~/Views/Backend/Products/Index.cshtml", products.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                var products = db.Products.Include(p => p.Category).Include(p => p.Manufacture);
+                return View("~/Views/Backend/Products/Index.cshtml", products.ToList());
+            }
+
+            return RedirectToAction("../Users/Login");
         }
 
         // GET: Products/Details/5
@@ -34,6 +39,9 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", product.CategoryId);
+            ViewBag.ManufactureId = new SelectList(db.Manufactures, "ManufactureId", "ManufactureName", product.ManufactureId);
+            ViewBag.Product = product;
             return View("~/Views/Backend/Products/Details.cshtml", product);
         }
 
@@ -195,7 +203,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View("~/Views/Backend/Products/Delete.cshtml", product);
         }
 
         // POST: Products/Delete/5

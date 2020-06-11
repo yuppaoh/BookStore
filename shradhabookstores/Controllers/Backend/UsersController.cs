@@ -14,10 +14,82 @@ namespace shradhabookstores.Controllers.Backend
     {
         private BookStoreEntities db = new BookStoreEntities();
 
+        // Login
+        // -----------------------------------------------------
+        public ActionResult Login()
+        {
+            return View("~/Views/Backend/Users/Login.cshtml");
+        }
+
+        [HttpPost]
+        public ActionResult Login(string login, string password)
+        {
+            using (BookStoreEntities context = new BookStoreEntities())
+            {
+                // Cach 1: Viet theo dang Method
+                var objEmployeeLogin = context.Users
+                    .Where(p => p.UserName == login && p.UserPassword == password)
+                    .FirstOrDefault();
+
+                if (objEmployeeLogin == null)
+                {
+                    TempData["login_oldValue"] = login;
+                    TempData["password_oldValue"] = password;
+
+                    //return "Khong hop le";
+                    // validate login
+                    if (String.IsNullOrEmpty(login))
+                    {
+                        TempData["msgLoi_Login"] = "Please, enter Username!";
+                        return View("~/Views/Backend/Users/Login.cshtml");
+                    }
+                    else if (login.Length < 3)
+                    {
+                        TempData["msgLoi_Login"] = "Username must be >= 3 characters.";
+                        return View("~/Views/Backend/Users/Login.cshtml");
+                    }
+                    else
+                    {
+                        TempData["msgLoi_Login"] = String.Empty;
+                    }
+
+                    // validate password
+                    if (String.IsNullOrEmpty(password) || password.Length < 3)
+                    {
+                        TempData["msgLoi_Password"] = "Please, enter password >=3 characters.";
+                        return View("~/Views/Backend/Users/Login.cshtml");
+                    }
+                    else
+                    {
+                        TempData["msgLoi_Password"] = String.Empty;
+                    }
+
+                    TempData["msgLoi"] = "Login fail. Check your username and password agian please!";
+                    return View("~/Views/Backend/Users/Login.cshtml");
+                    //return String.Format("Khong hop le {0} {1}", objEmployeeLogin.EmpName, objEmployeeLogin.EmpRole);
+                }
+                else
+                {
+                    TempData["msgLoi"] = String.Empty;
+                    //TempData["username"] = login;
+                    Session["LoginUser"] = login;
+
+                    //return View();
+                    return RedirectToAction("../Products/Index");
+                    //return View("~/Views/Backend/Products/Index.cshtml");
+                }
+            }
+        }
+
         // GET: Users
         public ActionResult Index()
         {
-            return View("~/Views/Backend/Users/Index.cshtml", db.Users.ToList());
+            if (Session["LoginUser"] != null)
+            {
+                return View("~/Views/Backend/Users/Index.cshtml", db.Users.ToList());
+            }
+            return RedirectToAction("../Users/Login");
+            
         }
 
         // GET: Users/Details/5
@@ -101,7 +173,7 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View("~/Views/Backend/Users/Delete.cshtml", user);
         }
 
         // POST: Users/Delete/5

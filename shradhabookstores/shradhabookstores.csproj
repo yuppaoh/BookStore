@@ -187,6 +187,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\images\no-photo.png" />
+    <Content Include="Content\style4.css" />
     <Content Include="EF\BookStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookStoreModel.edmx</DependentUpon>
@@ -238,7 +239,6 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
     <Content Include="Views\Home\Log.cshtml" />
-    <Content Include="Views\Home\Ex.cshtml" />
     <Content Include="Views\Backend\Categories\Create.cshtml" />
     <Content Include="Views\Backend\Categories\Delete.cshtml" />
     <Content Include="Views\Backend\Categories\Details.cshtml" />
@@ -278,6 +278,10 @@
     <Content Include="Views\Backend\Orders\Details.cshtml" />
     <Content Include="Views\Backend\Orders\Edit.cshtml" />
     <Content Include="Views\Backend\Orders\Index.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Shared\_Layout_login.cshtml" />
+    <Content Include="Views\Backend\Users\Login.cshtml" />
+    <Content Include="Views\Home\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

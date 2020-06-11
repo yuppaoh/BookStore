@@ -5,15 +5,18 @@
     Layout = "~/Views/Backend/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>List of Orders</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PlaceOfDelivery)
@@ -42,6 +45,9 @@
             @Html.DisplayFor(modelItem => item.OrderDate)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.PlaceOfDelivery)
         </td>
         <td>
@@ -60,9 +66,9 @@
             @Html.DisplayFor(modelItem => item.Payment.PaymentName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrderId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrderId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OrderId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.OrderId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.OrderId })
         </td>
     </tr>
 }

@@ -5,87 +5,109 @@
     Layout = "~/Views/Backend/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Product Details</h2>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <center>
+            @if (String.IsNullOrEmpty(ViewBag.Product.ProductImage))
+            {
+                <img class="bd-placeholder-img card-img-top" width="50%" height="200" src="~/Content/images/no-photo.png" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+            }
+            else
+            {
+                <img class="bd-placeholder-img card-img-top" width="50%" height="200" src="~/UploadedFiles/@ViewBag.Product.ProductImage" style="padding: 10px 0 10px 0; border: 1px solid #ccc;">
+            }
+            <br /><br />
+            <p>
+                <button>@Html.ActionLink("<< Back", "Index")</button> |
+                <button>@Html.ActionLink("Edit", "Edit", new { id = Model.ProductId })</button>
+                
+            </p>
+        </center>
+    </div>
+    <div class="col-md-8">
+            
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductId)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductType)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductType)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductType)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductType)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Author)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitPrice)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UnitPrice)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Note)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Note)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Manufacture.ManufactureName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Manufacture.ManufactureName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Manufacture.ManufactureName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Manufacture.ManufactureName)
-        </dd>
-
-    </dl>
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    

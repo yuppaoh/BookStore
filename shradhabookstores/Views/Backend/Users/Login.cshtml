@@ -8,7 +8,7 @@
 
 <br />
 <div class="login-form">
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { enctype = "multipart/form-data", Action = "/Home/Login"}))
+    @using (Html.BeginForm("Login", "Users", FormMethod.Post, new { enctype = "multipart/form-data", Action = "/Users/Login"}))
     {
         @Html.AntiForgeryToken()
 

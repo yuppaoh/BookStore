@@ -7,6 +7,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
+        .navbar {
+            border: none;
+            border-radius: 0;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
         .navbar:hover {
             background: #CCCCFF;
         }
@@ -30,7 +35,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    <li>@Html.ActionLink("Product", "Product", "Home")</li>
                     
                     @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
         <li>@Html.ActionLink("Ex", "Ex", "Home")</li>*@
@@ -39,22 +43,44 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("User", "Index", "Users")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
-                    <li>@Html.ActionLink("Manufactures", "Index", "Manufactures")</li>
                     <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Manufactures", "Index", "Manufactures")</li>
+                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
                     <li>@Html.ActionLink("Payments", "Index", "Payments")</li>
 
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                    @*<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
-        </li>*@
+                    @*<li>@Html.ActionLink("Login", "Login", "Home")</li>*@
+
+                    @if (Session["LoginUser"] == null)
+                    {
+                        @*<li><a href="/Users/Login" class="btn btn-warning">Shop Management</a></li>*@
+                        @*<li>@Html.ActionLink("User", "Index", "Users")</li>*@
+                        <li>@Html.ActionLink("Shop Management", "Login", "Users")</li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="dropdown">
+                                <style>
+                                    ul .dropdown-menu li a {
+                                        background-color: #6D7FCC;
+                                        color: white;
+                                    }
+                                </style>
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="height: 40px; margin-top: 5px;">
+                                    <span><i class="glyphicon glyphicon-user"></i></span>&nbsp;&nbsp; <span>@Session["LoginUser"]</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="background-color: #6D7FCC;">
+                                    <li><a href="#">Order Tracking</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Edit profile</a></li>
+                                    <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
                 </ul>
             </div>
 

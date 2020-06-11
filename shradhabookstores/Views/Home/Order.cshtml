@@ -1,0 +1,100 @@
+﻿@model IEnumerable<shradhabookstores.EF.Order>
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order list of @Session["LoginUser"]</h2>
+@if (TempData["msg"] != null && !String.IsNullOrEmpty(TempData["msg"].ToString()))
+{
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["msg"]
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlaceOfDelivery)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Distance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payment.PaymentName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var classStatus = "success";
+        if(item.OrderStatus == "Cancel")
+        {
+            classStatus  = "danger";
+        }
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaceOfDelivery)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Distance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryDate)
+        </td>
+        <td>
+            <span class="label label-@classStatus">@Html.DisplayFor(modelItem => item.OrderStatus)</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment.PaymentName)
+        </td>
+
+        @if (item.OrderStatus == "Cancel")
+        {
+            <td></td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Update", "Edit", new { id = item.OrderId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.OrderId }) |
+                @*@Html.ActionLink("Cancel", "CancelOrder", new { id = item.OrderId })*@
+
+                <form method="post" action="CancelOrder">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="order_id" value="@item.OrderId" />
+                    <button class="btn btn-primary">Cancel</button>
+                </form>
+            </td>
+        }
+
+
+
+    </tr>
+    }
+
+</table>
