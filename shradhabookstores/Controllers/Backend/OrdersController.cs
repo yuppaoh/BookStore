@@ -39,7 +39,8 @@ namespace shradhabookstores.Controllers.Backend
             {
                 return HttpNotFound();
             }
-            return View("~/Views/Backend/Orders/Detail.cshtml", order);
+            
+            return View("~/Views/Backend/Orders/Details.cshtml", order);
         }
 
         // GET: Orders/Create
@@ -84,6 +85,8 @@ namespace shradhabookstores.Controllers.Backend
             }
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", order.CustomerId);
             ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName", order.PaymentId);
+            ViewBag.OrderStatus = order.OrderStatus;
+            ViewBag.CustId = order.Customer;
             return View("~/Views/Backend/Orders/Edit.cshtml", order);
         }
 

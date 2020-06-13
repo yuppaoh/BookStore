@@ -12,14 +12,14 @@
     {
         feeShip = 0;
     }
-    else if ((kmRandom >= 3 && kmRandom <= 6))
+    else if ((kmRandom >= 3))
     {
-        feeShip = 3;
+        feeShip = 1;
     }
-    else if ((kmRandom > 6 && kmRandom <= 9))
-    {
-        feeShip = 6;
-    }
+    //else if ((kmRandom > 6 && kmRandom <= 9))
+    //{
+    //    feeShip = 6;
+    //}
 }
 
 <center><h3>Information of Order Product</h3></center>
@@ -31,21 +31,28 @@
     <input type="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
     <input type="hidden" name="UnitPrice" id="UnitPrice" value="@Model.UnitPrice" />
 
-
     <br /><br />
-    <center>
-        <div class="container">
-            <div colspan="2" class="col-md-6" style="text-align: right;">Payment</div>
-            <div class="col-md-6" style="text-align: left;">
-                <select name="PaymentId" id="PaymentId" class="form-control">
-                    @foreach (var payment in ViewBag.paymentlist)
-                    {
-                        <option value="@payment.PaymentId">@payment.PaymentName</option>
-                    }
-                </select>
-            </div>
-        </div>
-    </center>
+          <center>
+              <div class="container">
+                  <div colspan="2" class="col-md-6" style="text-align: right;">Payment</div>
+                  <div class="col-md-6" style="text-align: left;">
+                      <select name="PaymentId" id="PaymentId" class="form-control">
+                          @foreach (var payment in ViewBag.paymentlist)
+                          {
+                              <option value="@payment.PaymentId">@payment.PaymentName</option>
+                          }
+                      </select>
+                  </div>
+              </div>
+              <br />
+              <div class="container">
+                  <div colspan="2" class="col-md-6" style="text-align: right;">Place of Delivery</div>
+                  <div class="col-md-6" style="text-align: left;">
+                      <input type="text" name="PlaceOfDelivery" id="PlaceOfDelivery" class="form-control"/>
+                          
+                  </div>
+              </div>
+          </center>
 
     <div class="container">
         <div class="row">
@@ -81,9 +88,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"></td>
+                    <td colspan="2">
+                        
+                        
+                        
+                    </td>
                     <td><i style="color: blue">Fee (distance: @kmRandom km):</i></td>
-                    <td>$ @feeShip</td>
+                    <td>$ <span id="pay"></span> </td>
+
                 </tr>
                 <tr style="font-weight: bold">
                     <td colspan="2"></td>
@@ -99,14 +111,14 @@
                 </tr>
             </table>
 
-        <div class="row">
-            <div class="col-md-6 col-lg-6" style="text-align: right; margin-top: 3px;">
-                @Html.ActionLink("<< Back to List", "Product")
+            <div class="row">
+                <div class="col-md-6 col-lg-6" style="text-align: right; margin-top: 3px;">
+                    @Html.ActionLink("<< Back to List", "Product")
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <button class="btn btn-primary" style="text-align: right;">Confirm</button>
+                </div>
             </div>
-            <div class="col-md-6 col-lg-6">
-                <button class="btn btn-primary" style="text-align: right;">Confirm</button>
-            </div>
-        </div>
         </div>
     </div>
 }
@@ -122,11 +134,24 @@
             var total = qty * price;
             $('#total').html(total);
 
-            var fee = @feeShip;
+            var mpay = $('#PaymentId').val();
+            if (@feeShip> 0) {
+                var fee = @feeShip * mpay - 1;
+            } else {
+                var fee = @feeShip * mpay;
+            }
+            
             var subtotal = total + fee;
             $('#subtotal').html(subtotal);
+            $('#pay').html(fee);
         }
 
+
+        $('#PaymentId').change(
+            function () {
+                calcSubtotal();
+            }
+        );
 
         $('#Quantity').change(
             function () {

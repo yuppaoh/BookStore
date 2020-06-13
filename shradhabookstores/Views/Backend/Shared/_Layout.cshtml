@@ -41,13 +41,17 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    @if (Convert.ToString(Session["LoginUser"]) == "admin" || Convert.ToString(Session["LoginUser"]) == "Admin")
+                    {
                     <li>@Html.ActionLink("User", "Index", "Users")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                     <li>@Html.ActionLink("Products", "Index", "Products")</li>
                     <li>@Html.ActionLink("Manufactures", "Index", "Manufactures")</li>
-                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
                     <li>@Html.ActionLink("Payments", "Index", "Payments")</li>
+                    <li>@Html.ActionLink("Feedback", "#", "#")</li>
+                    }
+                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
 
                     @*<li>@Html.ActionLink("Login", "Login", "Home")</li>*@
 
@@ -73,8 +77,8 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="background-color: #6D7FCC;">
                                     <li><a href="#">Order Tracking</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Edit profile</a></li>
+                                    @*<li role="separator" class="divider"></li>*@
+                                    <li><a href="#">Profile</a></li>
                                     <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                                 </ul>
                             </div>

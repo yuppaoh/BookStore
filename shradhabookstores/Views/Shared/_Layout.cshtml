@@ -37,6 +37,7 @@
                     <li>@Html.ActionLink("Home", "Product", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Feedback", "Feedback", "Home")</li>
                     @if (Session["LoginUser"] == null)
                     {
                         <li>@Html.ActionLink("Login", "Login", "Home")</li>
@@ -88,9 +89,11 @@
     
     <div class="container-fluid" style="margin-top: 5px;">
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year, eProject-Sem3 Group2</p>
-        </footer>
+        <center>
+            <footer>
+                <p>&copy; @DateTime.Now.Year, eProject-Sem3 Group2</p>
+            </footer>
+        </center>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

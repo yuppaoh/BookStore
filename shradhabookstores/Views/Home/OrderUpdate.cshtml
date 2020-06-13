@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Backend/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Order</h2>
+<h2>Update Order</h2>
 
 @using (Html.BeginForm())
 {
@@ -52,8 +52,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.PaymentId, "PaymentId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Payment.PaymentName, new { htmlAttributes = new { @class = "form-control", @readonly = "True" } })
-            @*@Html.DropDownList("PaymentId", null, htmlAttributes: new { @class = "form-control" })*@
+            @*@Html.EditorFor(model => model.Payment.PaymentName, new { htmlAttributes = new { @class = "form-control", @readonly = "True" } })*@
+            @Html.DropDownList("PaymentId", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.PaymentId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -61,7 +61,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control"} })
+            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @readonly = "True" } })
             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -69,21 +69,22 @@
     <div class="form-group">
         @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select name="OrderStatus" id="OrderStatus" value="@ViewBag.OrderStatus" class="form-control">
-                <option name="OrderStatus" value="@ViewBag.OrderStatus" selected="selected">@ViewBag.OrderStatus</option>
-                @if (ViewBag.OrderStatus != "Delivered")
-                {
-                    <option value="Delivered">Delivered</option>
-                }
-                @if (ViewBag.OrderStatus != "Waiting")
-                {
-                    <option value="Waiting">Waiting</option>
-                }
-                @if (ViewBag.OrderStatus != "Cancel")
-                {
-                    <option value="Cancel">Cancel</option>
-                }
-            </select>
+            @Html.EditorFor(model => model.OrderStatus, new { htmlAttributes = new { @class = "form-control", @readonly = "True" } })
+            @*<select name="OrderStatus" id="OrderStatus" value="@ViewBag.OrderStatus" class="form-control">
+            <option name="OrderStatus" value="@ViewBag.OrderStatus" selected="selected">@ViewBag.OrderStatus</option>
+            @if (ViewBag.OrderStatus != "Delivered")
+            {
+                <option value="Delivered">Delivered</option>
+            }
+            @if (ViewBag.OrderStatus != "Waiting")
+            {
+                <option value="Waiting">Waiting</option>
+            }
+            @if (ViewBag.OrderStatus != "Cancel")
+            {
+                <option value="Cancel">Cancel</option>
+            }
+        </select>*@
         </div>
     </div>
 
@@ -104,5 +105,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Order")
 </div>

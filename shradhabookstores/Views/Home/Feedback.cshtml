@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Feedback";
+}
+
+<div class="container"  style="width: 450px; background-color: #faf7e4; margin: 20px; padding-bottom: 20px;">
+    <div class="col col-md-12">
+        <h2>@ViewBag.Title.</h2>
+        <hr />
+        <form method="post" action="/php/twig/frontend/pages/lienhe">
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="ex: abc@gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label for="message">Comment</label>
+                <textarea name="message" class="form-control" style="height: 150px;"></textarea>
+            </div>
+            <button class="btn btn-primary" name="btnGoiLoiNhan">Send</button>
+        </form>
+    </div>
+</div>

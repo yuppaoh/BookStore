@@ -20,6 +20,11 @@ namespace shradhabookstores.Controllers
             return View();
         }
 
+        public ActionResult Feedback()
+        {
+            return View();
+        }
+
         public ActionResult Product()
         {
             //var type = Request.Form["type"];
@@ -86,7 +91,7 @@ namespace shradhabookstores.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProductOrder(int Distance, int PaymentId, string ProductId, int Quantity, double UnitPrice)
+        public ActionResult ProductOrder(int Distance, int PaymentId, string ProductId, int Quantity, double UnitPrice, string PlaceOfDelivery)
         {
             if (ModelState.IsValid)
             {
@@ -94,14 +99,11 @@ namespace shradhabookstores.Controllers
                 order.OrderId = Convert.ToString(db.Orders.Count() + 1).PadLeft(8,'0');
                 order.CustomerId = Convert.ToString(Session["LoginUser"]);
                 order.OrderDate = DateTime.Now;
-                order.PlaceOfDelivery = "";
+                order.PlaceOfDelivery = PlaceOfDelivery;
                 order.Distance = Distance;
                 order.PaymentId = PaymentId;
+                order.OrderStatus = "Waiting";
                 db.Orders.Add(order);
-
-                //
-                //(DateTime.Now - order.OrderDate).Value.Hours ;
-
 
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.Order = order;
@@ -111,7 +113,7 @@ namespace shradhabookstores.Controllers
                 db.OrderDetails.Add(orderDetail);
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Order");
             }
             return View();
         }
@@ -119,11 +121,15 @@ namespace shradhabookstores.Controllers
         // GET: Orders
         public ActionResult Order()
         {
-            var customer_id = Convert.ToString(Session["LoginUser"]);
-            var orders = db.Orders
-                .Where(p => p.CustomerId == customer_id)
-                .Include(o => o.Customer).Include(o => o.Payment);
-            return View(orders.ToList());
+             if (Session["LoginUser"] != null)
+             {
+                 var customer_id = Convert.ToString(Session["LoginUser"]);
+                 var orders = db.Orders
+                     .Where(p => p.CustomerId == customer_id)
+                     .Include(o => o.Customer).Include(o => o.Payment);
+                 return View(orders.ToList());
+             }
+             return RedirectToAction("../Home/Product");
         }
 
         // GET: Orders/Details/5
@@ -134,14 +140,55 @@ namespace shradhabookstores.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Order order = db.Orders.Find(id);
-
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View("~/Views/Backend/Orders/Detail.cshtml", order);
+
+            return View("~/Views/Home/OrderDetails.cshtml", order);
         }
 
+        //-----------------------------------------
+        // GET: Orders/Edit/5
+        public ActionResult OrderUpdate(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", order.CustomerId);
+            ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName", order.PaymentId);
+            ViewBag.OrderStatus = order.OrderStatus;
+            ViewBag.CustId = order.Customer;
+            return View("~/Views/Home/OrderUpdate.cshtml", order);
+        }
+
+        // POST: Orders/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OrderUpdate([Bind(Include = "OrderId,CustomerId,OrderDate,PlaceOfDelivery,Distance,PaymentId,DeliveryDate,OrderStatus")] Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", order.CustomerId);
+            ViewBag.PaymentId = new SelectList(db.Payments, "PaymentId", "PaymentName", order.PaymentId);
+            return View(order);
+        }
+
+
+
+        //-----------------------------------------
         public ActionResult CancelOrder()
         {
             return RedirectToAction("Order");

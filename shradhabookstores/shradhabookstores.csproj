@@ -282,6 +282,9 @@
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\Backend\Users\Login.cshtml" />
     <Content Include="Views\Home\Order.cshtml" />
+    <Content Include="Views\Home\OrderDetails.cshtml" />
+    <Content Include="Views\Home\OrderUpdate.cshtml" />
+    <Content Include="Views\Home\Feedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

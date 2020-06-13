@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<shradhabookstores.EF.Order>
 
 @{
-                /**/
-
-                ViewBag.Title = "Index";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Order list of @Session["LoginUser"]</h2>
@@ -18,6 +16,9 @@
 
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.OrderDate)
         </th>
@@ -49,8 +50,15 @@
         {
             classStatus  = "danger";
         }
+        else if (item.OrderStatus == "Delivered")
+        {
+            classStatus = "primary";
+        }
 
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.OrderDate)
         </td>
@@ -80,20 +88,20 @@
         else
         {
             <td>
-                @Html.ActionLink("Update", "Edit", new { id = item.OrderId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.OrderId }) |
+                <button class="btn btn-xs">
+                    @Html.ActionLink("Update", "OrderUpdate", new { id = item.OrderId })</button> 
+                <button class="btn btn-xs">
+                    @Html.ActionLink("Details", "OrderDetails", new { id = item.OrderId })
+                </button>
                 @*@Html.ActionLink("Cancel", "CancelOrder", new { id = item.OrderId })*@
 
                 <form method="post" action="CancelOrder">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="order_id" value="@item.OrderId" />
-                    <button class="btn btn-primary">Cancel</button>
+                    <button class="btn btn-primary btn-xs">Cancel</button>
                 </form>
             </td>
         }
-
-
-
     </tr>
     }
 

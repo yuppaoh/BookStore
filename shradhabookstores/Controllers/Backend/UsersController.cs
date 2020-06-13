@@ -73,9 +73,13 @@ namespace shradhabookstores.Controllers.Backend
                     TempData["msgLoi"] = String.Empty;
                     //TempData["username"] = login;
                     Session["LoginUser"] = login;
-
+                    Session["LoginId"] = objEmployeeLogin.UserId;
                     //return View();
-                    return RedirectToAction("../Products/Index");
+                    if (login == "admin" || login == "Admin")
+                    {
+                        return RedirectToAction("../Products/Index");
+                    }
+                    return RedirectToAction("../Orders/Index");
                     //return View("~/Views/Backend/Products/Index.cshtml");
                 }
             }
@@ -100,6 +104,22 @@ namespace shradhabookstores.Controllers.Backend
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+            
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View("~/Views/Backend/Users/Details.cshtml", user);
+        }
+        // GET: Users/UserDetails/5
+        public ActionResult UserDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+
             if (user == null)
             {
                 return HttpNotFound();

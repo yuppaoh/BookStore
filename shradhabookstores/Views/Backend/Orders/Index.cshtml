@@ -40,6 +40,17 @@
     </tr>
 
 @foreach (var item in Model) {
+
+    var classStatus = "success";
+    if (item.OrderStatus == "Cancel")
+    {
+        classStatus = "danger";
+    }
+    else if(item.OrderStatus == "Delivered")
+    {
+        classStatus = "primary";
+    }
+
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.OrderDate)
@@ -57,7 +68,7 @@
             @Html.DisplayFor(modelItem => item.DeliveryDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.OrderStatus)
+            <span class="label label-@classStatus">@Html.DisplayFor(modelItem => item.OrderStatus)</span>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Customer.CustomerName)
